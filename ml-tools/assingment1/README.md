@@ -9,8 +9,8 @@ This project implements a machine learning solution to predict bike rental deman
 **Web App Link**: [mlt-a1.devshubh.me](https://mlt-a1.devshubh.me)
 
 ## Resources
-- **GitHub Repository**: [GitHub Link](https://github.com/shubharthaksangharsha/seoul-bike-rental-prediction) *(placeholder - replace with actual link)*
-- **Dataset**: [Download from Google Drive](https://drive.google.com/file/placeholder) *(placeholder - replace with actual link)*
+- **GitHub Repository**: [GitHub Link](https://github.com/shubharthaksangharsha/trimester2/tree/main/ml-tools/assingment1)
+- **Dataset**: [Download from Google Drive](https://drive.google.com/drive/folders/1BYIg4eemQuazgVgMVr28WKtpcriYZ-DW?usp=drive_link)
 - **Project Report**: See [PDF Document](pdf/A1-a1944839-shubharthak-2025-ml-tools.pdf)
 
 ## Features
