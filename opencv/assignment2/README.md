@@ -15,7 +15,7 @@ Developed by [Shubharthak Sangharasha](https://devshubh.me/) as part of the Comp
 ## Resources
 
 - **Jupyter Notebook:** [Assignment_2_Notebook.ipynb](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/assignment2/Assignment_2_Notebook.ipynb)
-- **PDF Report:** [Assingment_2_Report.pdf](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/assignment2/Assingment_2_Report.pdf)
+- **PDF Report:** [Assingment_2_Report.pdf](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/assignment2/Assignment_2_Report.pdf)
 - **GitHub Repository:** [https://github.com/shubharthaksangharsha/trimester2/tree/main/opencv/assignment2](https://github.com/shubharthaksangharsha/trimester2/tree/main/opencv/assignment2)
 
 ## Datasets
