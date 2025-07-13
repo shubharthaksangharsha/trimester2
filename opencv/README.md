@@ -12,13 +12,19 @@ This application provides a visual and interactive exploration of fundamental co
 
 Developed by [Shubharthak Sangharasha](https://devshubh.me/) as part of the Computer Vision course assignment.
 
+## Resources
+
+- **Jupyter Notebook:** [Assignment_2_Notebook.ipynb](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/Assignment_2_Notebook.ipynb)
+- **PDF Report:** [Coming Soon]
+- **GitHub Repository:** [https://github.com/shubharthaksangharsha/trimester2/tree/main/opencv](https://github.com/shubharthaksangharsha/trimester2/tree/main/opencv)
+
 ## Datasets
 
 The application works with the following datasets:
 
-1. **Book Covers**: Collection of book cover images in different viewing conditions
-2. **Landmarks**: Famous landmarks photographed from different viewpoints
-3. **Museum Paintings**: Paintings captured with varying lighting and perspectives
+1. **[Book Covers](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/A2_smvs/book_covers)**: Collection of book cover images in different viewing conditions
+2. **[Landmarks](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/A2_smvs/landmarks)**: Famous landmarks photographed from different viewpoints
+3. **[Museum Paintings](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/A2_smvs/museum_paintings)**: Paintings captured with varying lighting and perspectives
 
 Each dataset contains both query and reference images to demonstrate matching and retrieval tasks.
 
