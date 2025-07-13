@@ -14,17 +14,17 @@ Developed by [Shubharthak Sangharasha](https://devshubh.me/) as part of the Comp
 
 ## Resources
 
-- **Jupyter Notebook:** [Assignment_2_Notebook.ipynb](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/Assignment_2_Notebook.ipynb)
+- **Jupyter Notebook:** [Assignment_2_Notebook.ipynb](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/assignment2/Assignment_2_Notebook.ipynb)
 - **PDF Report:** [Coming Soon]
-- **GitHub Repository:** [https://github.com/shubharthaksangharsha/trimester2/tree/main/opencv](https://github.com/shubharthaksangharsha/trimester2/tree/main/opencv)
+- **GitHub Repository:** [https://github.com/shubharthaksangharsha/trimester2/tree/main/opencv/assignment2](https://github.com/shubharthaksangharsha/trimester2/tree/main/opencv/assignment2)
 
 ## Datasets
 
 The application works with the following datasets:
 
-1. **[Book Covers](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/A2_smvs/book_covers)**: Collection of book cover images in different viewing conditions
-2. **[Landmarks](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/A2_smvs/landmarks)**: Famous landmarks photographed from different viewpoints
-3. **[Museum Paintings](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/A2_smvs/museum_paintings)**: Paintings captured with varying lighting and perspectives
+1. **[Book Covers](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/assignment2/book_covers)**: Collection of book cover images in different viewing conditions
+2. **[Landmarks](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/assignment2/landmarks)**: Famous landmarks photographed from different viewpoints
+3. **[Museum Paintings](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/assignment2/museum_paintings)**: Paintings captured with varying lighting and perspectives
 
 Each dataset contains both query and reference images to demonstrate matching and retrieval tasks.
 
@@ -94,4 +94,4 @@ The implementation provides insights into the fundamental geometric relationship
 
 ## Jupyter Notebook
 
-The [`Assignment_2_Notebook.ipynb`](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/Assignment_2_Notebook.ipynb) contains detailed explanations, code implementations, and visualizations for all the questions. It serves as both documentation and a tutorial for the computer vision concepts implemented in the application. 
+The [`Assignment_2_Notebook.ipynb`](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/assignment2/Assignment_2_Notebook.ipynb) contains detailed explanations, code implementations, and visualizations for all the questions. It serves as both documentation and a tutorial for the computer vision concepts implemented in the application. 
