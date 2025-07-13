@@ -44,7 +44,7 @@ Implementation of fundamental computer vision techniques including feature match
 
 | Assignment | Datasets | Notebooks | PDF Reports | Live Demo |
 |------------|----------|-----------|------------|-----------|
-| Assignment 2 | Book Covers, Landmarks, Museum Paintings | [Assignment_2_Notebook.ipynb](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/Assignment_2_Notebook.ipynb) | - | [a2-cv.devshubh.me](https://a2-cv.devshubh.me) |
+| Assignment 2 | [Book Covers](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/A2_smvs/book_covers), [Landmarks](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/A2_smvs/landmarks), [Museum Paintings](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/A2_smvs/museum_paintings) | [Assignment_2_Notebook.ipynb](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/Assignment_2_Notebook.ipynb) | - | [a2-cv.devshubh.me](https://a2-cv.devshubh.me) |
 
 **Project Details:**
 - **Computer Vision Explorer**: An interactive application demonstrating feature matching, homography estimation, image retrieval, and epipolar geometry
