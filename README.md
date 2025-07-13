@@ -36,7 +36,7 @@ Implementation of fundamental computer vision techniques including feature match
 | Assignment 1 | [SeoulBikeData.csv](https://github.com/shubharthaksangharsha/trimester2/blob/main/ml-tools/assingment1/SeoulBikeData.csv), [CleanedSeoulBikeData.csv](https://github.com/shubharthaksangharsha/trimester2/blob/main/ml-tools/assingment1/CleanedSeoulBikeData.csv) | [A1-a1944839-shubharthak-2025-ml-tools.ipynb](https://github.com/shubharthaksangharsha/trimester2/blob/main/ml-tools/assingment1/A1-a1944839-shubharthak-2025-ml-tools.ipynb) | [A1-a1944839-shubharthak-2025-ml-tools.pdf](https://github.com/shubharthaksangharsha/trimester2/blob/main/ml-tools/assingment1/pdf/A1-a1944839-shubharthak-2025-ml-tools.pdf) | [mlt-a1.devshubh.me](https://mlt-a1.devshubh.me) |
 
 **Project Details:**
-- **Seoul Bike Rental Prediction**: A machine learning solution with multiple models to predict bike rental demand based on weather and seasonal factors
+- **Assignment 1**: Research, prediction, and interactive dashboard for Seoul bike rental demand. [Preview README](ml-tools/assingment1/README.md)
 </details>
 
 <details>
@@ -49,7 +49,7 @@ Implementation of fundamental computer vision techniques including feature match
 
 **Project Details:**
 - **Assignment 1**: Research, implement, and experiment with image filtering operations (convolution, greyscale, binary, Gaussian, Sobel, LoG) using Python, numpy, skimage, and matplotlib. Builds foundational skills for later computer vision topics like CNNs.
-- **Assignment 2**: Computer Vision Explorer — An interactive application demonstrating feature matching, homography estimation, image retrieval, and epipolar geometry
+- **Assignment 2**: Computer Vision Explorer — An interactive application demonstrating feature matching, homography estimation, image retrieval, and epipolar geometry. [Preview README](opencv/assignment2/README.md)
 </details>
 
 ## Author
