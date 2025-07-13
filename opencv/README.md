@@ -88,4 +88,4 @@ The implementation provides insights into the fundamental geometric relationship
 
 ## Jupyter Notebook
 
-The [`Assignment_2_Notebook.ipynb`]() contains detailed explanations, code implementations, and visualizations for all the questions. It serves as both documentation and a tutorial for the computer vision concepts implemented in the application. 
+The [`Assignment_2_Notebook.ipynb`](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/Assignment_2_Notebook.ipynb) contains detailed explanations, code implementations, and visualizations for all the questions. It serves as both documentation and a tutorial for the computer vision concepts implemented in the application. 
