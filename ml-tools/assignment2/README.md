@@ -183,5 +183,3 @@ assignment2/
 This project is for educational purposes as part of a machine learning assignment demonstrating best practices in medical AI applications.
 
 ---
-
-*Built with ❤️ for advancing medical AI and machine learning education* 
