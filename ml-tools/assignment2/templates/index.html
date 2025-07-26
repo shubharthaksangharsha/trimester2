@@ -856,6 +856,141 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Footer Styles */
+        .app-footer {
+            background: var(--card-bg);
+            border-top: 2px solid var(--border-color);
+            margin-top: 40px;
+            padding: 40px 0 20px 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .footer-info {
+            margin-bottom: 30px;
+        }
+
+        .footer-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--text-primary);
+            margin: 0 0 8px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-subtitle {
+            color: var(--text-secondary);
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            min-width: 180px;
+        }
+
+        .footer-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            border-color: #667eea;
+        }
+
+        .link-icon {
+            font-size: 24px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+
+        .link-content {
+            text-align: left;
+        }
+
+        .link-title {
+            font-weight: bold;
+            color: var(--text-primary);
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .link-url {
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+
+        .footer-bottom {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-copyright {
+            color: var(--text-secondary);
+            margin: 0 0 10px 0;
+            font-size: 14px;
+        }
+
+        .footer-tech {
+            margin: 0;
+        }
+
+        .tech-stack {
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+            background: var(--bg-secondary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Responsive Footer */
+        @media (max-width: 768px) {
+            .footer-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .footer-link {
+                min-width: 250px;
+            }
+            
+            .footer-title {
+                font-size: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1039,6 +1174,43 @@
             </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-content">
+            <div class="footer-info">
+                <p class="footer-title">🔬 Breast Cancer Classification Demo</p>
+                <p class="footer-subtitle">Interactive Machine Learning Model Demonstration</p>
+            </div>
+            
+            <div class="footer-links">
+                <a href="https://devshubh.me" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <div class="link-icon">🌐</div>
+                    <div class="link-content">
+                        <div class="link-title">Portfolio</div>
+                        <div class="link-url">devshubh.me</div>
+                    </div>
+                </a>
+                
+                <a href="https://github.com/shubharthaksangharsha/trimester2" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <div class="link-icon">💻</div>
+                    <div class="link-content">
+                        <div class="link-title">GitHub</div>
+                        <div class="link-url">trimester2</div>
+                    </div>
+                </a>
+                
+                <a href="https://linkedin.com/in/shubharthaksangharsha" target="_blank" rel="noopener noreferrer" class="footer-link">
+                    <div class="link-icon">💼</div>
+                    <div class="link-content">
+                        <div class="link-title">LinkedIn</div>
+                        <div class="link-url">shubharthaksangharsha</div>
+                    </div>
+                </a>
+            </div>
+            
+        </div>
+    </footer>
 
     <script>
         // Global variables
