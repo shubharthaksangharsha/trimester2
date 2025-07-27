@@ -1,0 +1,41 @@
+ati-bigdata.devshubh.me {
+    # Handle API routes
+    handle /api/* {
+        reverse_proxy localhost:8504
+    }
+
+    # Handle static assets and other routes
+    handle /* {
+        reverse_proxy localhost:8504
+    }
+
+    # Enable CORS for development
+    header {
+        Access-Control-Allow-Origin *
+        Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+        Access-Control-Allow-Headers "Content-Type, Authorization"
+    }
+
+    # Logging
+    log {
+        output file /var/log/caddy/ati-bigdata.log
+        format json
+    }
+
+    # Enable compression
+    encode zstd gzip
+
+    # Security headers
+    header {
+        # Enable HSTS
+        Strict-Transport-Security max-age=31536000;
+        # Prevent MIME sniffing
+        X-Content-Type-Options nosniff
+        # Prevent clickjacking
+        X-Frame-Options DENY
+        # Enable XSS protection
+        X-XSS-Protection "1; mode=block"
+        # Content Security Policy
+        Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://maps.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://maps.googleapis.com; frame-src 'none';"
+    }
+} 

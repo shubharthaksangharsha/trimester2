@@ -114,6 +114,8 @@ def get_current_traffic():
             'id': int_id,
             'name': info['name'],
             'position': {'x': info['x'], 'y': 0, 'z': info['z']},
+            'lat': info['lat'],
+            'lng': info['lng'],
             'volume': round(predicted_volume),
             'congestion_level': congestion_level,
             'color': color,
@@ -267,4 +269,4 @@ def get_current_weather():
     })
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000) 
+    app.run(debug=True, host='0.0.0.0', port=8504) 

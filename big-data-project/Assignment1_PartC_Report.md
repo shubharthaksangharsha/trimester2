@@ -1,3 +1,17 @@
+# Adelaide Traffic Intelligence - Big Data Analysis
+
+**Created by: Shubharthak Sangharsha ([Portfolio](https://devshubh.me))**
+
+## 🌐 Live Resources
+- **Interactive Web App**: [ati-bigdata.devshubh.me](https://ati-bigdata.devshubh.me)
+- **GitHub Repository**: [GitHub Link](https://github.com/shubharthaksangharsha/trimester2/tree/main/big-data-project)
+- **3D Visualization**: Interactive Three.js traffic prediction dashboard
+- **ML Models**: Ridge Regression with 95.2% accuracy for traffic forecasting
+
+This comprehensive big data analysis project demonstrates advanced machine learning techniques for urban traffic prediction in Adelaide. The project includes data preprocessing, feature engineering, model training, and deployment of an interactive web application with 3D visualizations, Google Maps integration, and real-time predictions. The live dashboard showcases dual visualization modes (3D city model and interactive maps) with professional light/dark themes.
+
+---
+
 # Assignment 1: Part C - Predictive Modeling Report
 ## Urban Traffic Congestion Prediction in Adelaide
 

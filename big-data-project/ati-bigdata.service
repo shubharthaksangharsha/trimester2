@@ -1,0 +1,15 @@
+[Unit]
+Description=Adelaide Traffic Intelligence - Big Data Analysis
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/trimester2/big-data-project
+Environment=PATH=/home/ubuntu/trimester2/big-data-project/venv/bin
+ExecStart=/home/ubuntu/trimester2/big-data-project/venv/bin/python app.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target 
