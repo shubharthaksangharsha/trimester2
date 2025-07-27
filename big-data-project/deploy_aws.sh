@@ -35,6 +35,22 @@ pip install scikit-learn==1.3.0
 pip install joblib==1.3.2
 pip install Werkzeug==2.3.7
 pip install Jinja2==3.1.2
+pip install python-dotenv==1.0.0
+
+# Create environment file
+echo "🔐 Setting up environment variables..."
+cat > .env << EOF
+# Adelaide Traffic Intelligence - Environment Configuration
+GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here
+FLASK_ENV=development
+FLASK_DEBUG=true
+FLASK_HOST=0.0.0.0
+FLASK_PORT=8504
+SECRET_KEY=adelaide_traffic_intelligence_secret_key_2024
+EOF
+
+echo "⚠️  IMPORTANT: Edit .env file and add your Google Maps API key!"
+echo "   Command: nano .env"
 
 # Create systemd service for auto-start
 echo "⚙️ Creating systemd service..."

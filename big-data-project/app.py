@@ -15,8 +15,14 @@ from datetime import datetime, timedelta
 import joblib
 from sklearn.preprocessing import RobustScaler
 import random
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'adelaide_traffic_intelligence_secret_key_2024')
 
 # Simulate model loading (in real implementation, load the actual trained model)
 class TrafficPredictor:
@@ -71,6 +77,15 @@ ADELAIDE_INTERSECTIONS = {
 def dashboard():
     """Main dashboard page"""
     return render_template('dashboard.html')
+
+@app.route('/api/config')
+def get_config():
+    """Provide configuration data including API keys"""
+    return jsonify({
+        'google_maps_api_key': os.getenv('GOOGLE_MAPS_API_KEY', ''),
+        'app_name': 'Adelaide Traffic Intelligence',
+        'version': '2.0'
+    })
 
 @app.route('/api/traffic/current')
 def get_current_traffic():
@@ -269,4 +284,12 @@ def get_current_weather():
     })
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=8504) 
+    port = int(os.getenv('FLASK_PORT', 8504))
+    host = os.getenv('FLASK_HOST', '0.0.0.0')
+    debug = os.getenv('FLASK_DEBUG', 'true').lower() == 'true'
+    
+    print(f"🚀 Starting Adelaide Traffic Intelligence Dashboard...")
+    print(f"   📍 URL: http://{host}:{port}")
+    print(f"   🔑 Google Maps API: {'✅ Configured' if os.getenv('GOOGLE_MAPS_API_KEY') else '❌ Missing'}")
+    
+    app.run(debug=debug, host=host, port=port) 
