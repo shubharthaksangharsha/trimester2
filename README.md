@@ -20,11 +20,13 @@ Implementation of fundamental computer vision techniques including feature match
 
 | Assignment | Datasets | Notebooks | PDF Reports | Live Demo |
 |------------|----------|-----------|------------|-----------|
-| Assignment 1 | - | - | [a1944839_Shubharthak_Sangharasha_Assignment1-Part_A.pdf](https://github.com/shubharthaksangharsha/trimester2/blob/main/big-data-project/a1944839_Shubharthak_Sangharasha_Assignment1-Part_A.pdf) | - |
+| Assignment 1 Part A | - | - | [a1944839_Shubharthak_Sangharasha_Assignment1-Part_A.pdf](https://github.com/shubharthaksangharsha/trimester2/blob/main/big-data-project/a1944839_Shubharthak_Sangharasha_Assignment1-Part_A.pdf) | - |
+| Assignment 1 Part C | [traffic_data.csv](https://github.com/shubharthaksangharsha/trimester2/blob/main/big-data-project/dataset/traffic_data.csv), [transit_data.csv](https://github.com/shubharthaksangharsha/trimester2/blob/main/big-data-project/dataset/transit_data.csv), [weather_data.csv](https://github.com/shubharthaksangharsha/trimester2/blob/main/big-data-project/dataset/weather_data.csv) | [Assignment1_PartC_Modeling.ipynb](https://github.com/shubharthaksangharsha/trimester2/blob/main/big-data-project/Assignment1_PartC_Modeling.ipynb) | [Assignment1_PartC_Report.md](https://github.com/shubharthaksangharsha/trimester2/blob/main/big-data-project/Assignment1_PartC_Report.md) | [ati-bigdata.devshubh.me](https://ati-bigdata.devshubh.me) |
 | Assignment 2 | [traffic_data.csv](https://github.com/shubharthaksangharsha/trimester2/blob/main/big-data-project/dataset/traffic_data.csv), [transit_data.csv](https://github.com/shubharthaksangharsha/trimester2/blob/main/big-data-project/dataset/transit_data.csv), [weather_data.csv](https://github.com/shubharthaksangharsha/trimester2/blob/main/big-data-project/dataset/weather_data.csv) | [Assignment2_Big_Data_Analysis.ipynb](https://github.com/shubharthaksangharsha/trimester2/blob/main/big-data-project/Assignment2_Big_Data_Analysis.ipynb) | - | - |
 
 **Project Details:**
-- [Assignment 1](ml-tools/assingment1/README.md): Analysis of traffic data patterns (with Part A report)
+- Assignment 1 Part A: Analysis of traffic data patterns (with Part A report)
+- [Assignment 1 Part C](big-data-project/README_PartC_Instructions.md): Advanced predictive modeling for Adelaide traffic congestion using machine learning (Ridge Regression, Random Forest, XGBoost, Neural Networks) with interactive 3D visualization dashboard and real-time predictions
 - Assignment 2: Comprehensive data analysis of urban transportation systems
 </details>
 

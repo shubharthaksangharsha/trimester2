@@ -682,9 +682,6 @@ Our analysis revealed fascinating circadian patterns in Adelaide's traffic flow:
 
 ### Appendix C: Deployment & Documentation
 - **`SETUP_GUIDE.md`** - Comprehensive installation and deployment instructions
-- **`GOOGLE_MAPS_SETUP.md`** - Google Maps API configuration guide
-- **`deploy_aws.sh`** - Automated AWS deployment script
-- **`Caddyfile`** - Web server configuration for HTTPS and domain routing
 - **Live Demo:** [https://ati-bigdata.devshubh.me](https://ati-bigdata.devshubh.me)
 
 ---
