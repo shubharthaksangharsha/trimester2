@@ -1,0 +1,74 @@
+COMPUTER VISION ASSIGNMENT 3 - COMPREHENSIVE MODEL SUMMARY
+======================================================================
+
+Total Models Saved: 10
+Failed Saves: 0
+Save Date: NVIDIA GeForce RTX 3060 Laptop GPU
+
+QUESTION 1.5 MODELS (Architecture Comparison):
+--------------------------------------------------
+q15_base_network: Q1.5 Base Network Architecture
+  Parameters: 669,706
+  Final Accuracy: 0.8659
+  Architecture: MLP
+
+q15_wider_network: Q1.5 Wider Network Architecture
+  Parameters: 1,863,690
+  Final Accuracy: 0.8695
+  Architecture: MLP
+
+q15_deeper_network: Q1.5 Deeper Network Architecture
+  Parameters: 1,195,018
+  Final Accuracy: 0.8764
+  Architecture: MLP
+
+QUESTION 1.7 MODELS (CNN vs MLP Comparison):
+--------------------------------------------------
+q17_simplecnn: Q1.7 Simple_CNN Architecture
+  Parameters: 215,370
+  Final Accuracy: 0.8919
+  Architecture: CNN
+  Best Epoch: 30
+
+q17_fullcnn: Q1.7 Full_CNN Architecture
+  Parameters: 467,818
+  Final Accuracy: 0.8927
+  Architecture: CNN
+  Best Epoch: 29
+
+q17_mlpbase: Q1.7 MLP_Base Architecture
+  Parameters: 669,706
+  Final Accuracy: 0.8676
+  Architecture: MLP
+  Best Epoch: 30
+
+QUESTION 2 MODELS (Activation Function Analysis):
+--------------------------------------------------
+q2_relu_xavier: Q2 ReLU with Xavier initialization
+  Test Accuracy: 0.8712
+  Final Loss: 0.3578
+  Parameters: 669,706
+  Activation: ReLU
+  Initialization: Xavier
+
+q2_tanh_xavier: Q2 Tanh with Xavier initialization
+  Test Accuracy: 0.8649
+  Final Loss: 0.3772
+  Parameters: 669,706
+  Activation: Tanh
+  Initialization: Xavier
+
+q2_sigmoid_xavier: Q2 Sigmoid with Xavier initialization
+  Test Accuracy: 0.8097
+  Final Loss: 0.5242
+  Parameters: 669,706
+  Activation: Sigmoid
+  Initialization: Xavier
+
+q2_sigmoid_default: Q2 Sigmoid with Default initialization
+  Test Accuracy: 0.7758
+  Final Loss: 0.6039
+  Parameters: 669,706
+  Activation: Sigmoid
+  Initialization: Default
+

@@ -1,0 +1,711 @@
+{% extends "base.html" %}
+
+{% block title %}{{ model_info.description }} - Computer Vision Assignment 3{% endblock %}
+
+{% block extra_head %}
+<style>
+    .model-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 15px;
+    }
+    
+    .metric-card {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+    
+    .architecture-3d {
+        height: 500px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 15px;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .training-chart {
+        height: 350px;
+    }
+    
+    .comparison-card {
+        border-left: 4px solid #007bff;
+        background: linear-gradient(90deg, rgba(0, 123, 255, 0.05) 0%, transparent 100%);
+    }
+    
+    .activation-viz {
+        height: 300px;
+        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        border-radius: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Model Header -->
+<section class="py-5">
+    <div class="container">
+        <div class="model-header p-5 mb-5">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-{{ 'project-diagram' if model_info.architecture_type == 'CNN' else 'cube' }} fa-3x me-4"></i>
+                        <div>
+                            <h1 class="mb-0">{{ model_info.description.replace('Q1.5 ', '').replace('Q1.7 ', '').replace('Q2 ', '') }}</h1>
+                            <p class="lead mb-0">{{ model_info.experiment }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <div class="text-center">
+                                <h3 class="fw-bold">{{ "%.2f%%"|format(model_info.accuracy * 100) }}</h3>
+                                <small>Test Accuracy</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-center">
+                                <h3 class="fw-bold">{{ "{:,.0f}".format(model_info.parameters / 1000) }}K</h3>
+                                <small>Parameters</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-center">
+                                <h3 class="fw-bold">{{ model_info.architecture_type }}</h3>
+                                <small>Architecture</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-center">
+                                <h3 class="fw-bold">{{ model_info.activation }}</h3>
+                                <small>Activation</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div id="modelHeaderViz" class="architecture-3d" style="height: 200px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Model Metrics -->
+<section class="py-4">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-3">
+                <div class="metric-card card text-center p-4">
+                    <i class="fas fa-bullseye fa-3x text-success mb-3"></i>
+                    <h4 class="fw-bold text-success">{{ "%.2f%%"|format(model_info.accuracy * 100) }}</h4>
+                    <p class="mb-0">Final Accuracy</p>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="metric-card card text-center p-4">
+                    <i class="fas fa-cogs fa-3x text-primary mb-3"></i>
+                    <h4 class="fw-bold text-primary">{{ "{:,}".format(model_info.parameters) }}</h4>
+                    <p class="mb-0">Total Parameters</p>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="metric-card card text-center p-4">
+                    <i class="fas fa-layer-group fa-3x text-warning mb-3"></i>
+                    <h4 class="fw-bold text-warning">{{ model_info.architecture_type }}</h4>
+                    <p class="mb-0">Architecture Type</p>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="metric-card card text-center p-4">
+                    <i class="fas fa-function fa-3x text-info mb-3"></i>
+                    <h4 class="fw-bold text-info">{{ model_info.activation }}</h4>
+                    <p class="mb-0">Activation Function</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Interactive Testing -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">
+            <i class="fas fa-vial me-2"></i>Test This Model
+        </h2>
+        
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-upload me-2"></i>Input Image
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Upload Area -->
+                        <div class="upload-area text-center p-4 mb-3" id="testUploadArea" style="border: 2px dashed #007bff; border-radius: 10px; cursor: pointer;">
+                            <i class="fas fa-cloud-upload-alt fa-2x text-primary mb-2"></i>
+                            <p class="mb-0">Drop image here or click to upload</p>
+                            <input type="file" id="testImageInput" accept="image/*" style="display: none;">
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-outline-primary flex-fill" id="testDrawBtn">
+                                <i class="fas fa-paint-brush me-1"></i>Draw
+                            </button>
+                            <button class="btn btn-outline-secondary flex-fill" id="testSampleBtn">
+                                <i class="fas fa-random me-1"></i>Random
+                            </button>
+                        </div>
+                        
+                        <!-- Drawing Canvas -->
+                        <div id="testDrawingArea" class="mt-3 text-center" style="display: none;">
+                            <canvas id="testDrawingCanvas" width="280" height="280" style="border: 1px solid #ddd; cursor: crosshair;"></canvas>
+                            <div class="mt-2">
+                                <button class="btn btn-sm btn-secondary" id="testClearCanvas">Clear</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Image Preview -->
+                        <div id="testImagePreview" class="mt-3 text-center" style="display: none;">
+                            <img id="testPreviewImg" class="img-thumbnail" style="max-width: 200px;">
+                            <p class="mt-2 mb-0">
+                                <small class="text-muted">Actual: <span id="testActualLabel">-</span></small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-brain me-2"></i>Model Prediction
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-primary w-100 mb-3" id="testPredictBtn" disabled>
+                            <i class="fas fa-magic me-2"></i>Predict with {{ model_info.description.split(' ')[0] }} Model
+                        </button>
+                        
+                        <div id="testPrediction" style="display: none;">
+                            <div class="alert alert-success" id="predictionResult">
+                                <h5 class="alert-heading">
+                                    <i class="fas fa-check-circle me-2"></i>Prediction: <span id="predictedClass">-</span>
+                                </h5>
+                                <p class="mb-2">Confidence: <span id="confidence" class="fw-bold">-</span></p>
+                                <div class="progress mb-2">
+                                    <div id="confidenceBar" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                                </div>
+                                <small>Model: {{ model_name }}</small>
+                            </div>
+                            
+                            <h6>Class Probabilities:</h6>
+                            <div id="probabilityBars"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 3D Architecture Visualization -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">
+            <i class="fas fa-cube me-2"></i>3D Architecture Visualization
+        </h2>
+        
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5>Architecture Details</h5>
+                        <table class="table table-sm">
+                            <tr>
+                                <td><strong>Type:</strong></td>
+                                <td>{{ model_info.architecture_type }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Total Parameters:</strong></td>
+                                <td>{{ "{:,}".format(model_info.parameters) }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Activation:</strong></td>
+                                <td>{{ model_info.activation }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Initialization:</strong></td>
+                                <td>{{ model_info.initialization }}</td>
+                            </tr>
+                        </table>
+                        
+                        <div class="mt-4">
+                            <h6>Visualization Controls</h6>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-outline-primary btn-sm" id="toggleRotation">
+                                    <i class="fas fa-sync me-1"></i>Toggle Rotation
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm" id="resetCamera">
+                                    <i class="fas fa-home me-1"></i>Reset Camera
+                                </button>
+                                <button class="btn btn-outline-success btn-sm" id="showWeights">
+                                    <i class="fas fa-weight me-1"></i>Show Weights
+                                </button>
+                            </div>
+                        </div>
+                        
+                        {% if model_info.activation in ['ReLU', 'Tanh', 'Sigmoid'] %}
+                        <div class="mt-4">
+                            <h6>Activation Function</h6>
+                            <div id="activationViz" class="activation-viz"></div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="col-md-8">
+                        <div id="detailedArchViz" class="architecture-3d"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Model Comparison -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">
+            <i class="fas fa-balance-scale me-2"></i>Compare with Other Models
+        </h2>
+        
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="comparison-card card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Performance Comparison</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="comparisonChart" class="training-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6">
+                <div class="comparison-card card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Parameter Efficiency</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="efficiencyChart" class="training-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="comparison-card card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Side-by-Side Comparison</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Model</th>
+                                        <th>Architecture</th>
+                                        <th>Parameters</th>
+                                        <th>Accuracy</th>
+                                        <th>Activation</th>
+                                        <th>Efficiency*</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="comparisonTable">
+                                    <!-- Will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                            <small class="text-muted">*Efficiency = Accuracy per Million Parameters</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Model Insights -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">
+            <i class="fas fa-lightbulb me-2"></i>Model Insights & Analysis
+        </h2>
+        
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Key Findings</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="modelInsights">
+                            <!-- Will be populated based on model type -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Quick Stats</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Rank by Accuracy:</span>
+                            <span id="accuracyRank" class="fw-bold">-</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Rank by Efficiency:</span>
+                            <span id="efficiencyRank" class="fw-bold">-</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Parameter Size Rank:</span>
+                            <span id="parameterRank" class="fw-bold">-</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <span>Overall Score:</span>
+                            <span id="overallScore" class="fw-bold text-primary">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// Model data
+const currentModel = '{{ model_name }}';
+const modelInfo = JSON.parse('{{ model_info|tojson|safe }}');
+const allModels = JSON.parse('{{ models|tojson|safe }}');
+const classNames = JSON.parse('{{ class_names|tojson|safe }}');
+
+// Global variables for testing
+let testCurrentImage = null;
+let testDrawingCanvas, testDrawingCtx;
+let testIsDrawing = false;
+
+// Initialize page
+document.addEventListener('DOMContentLoaded', function() {
+    initializeTestingArea();
+    initializeComparisons(); 
+    initializeInsights();
+    initializeDetailedVisualization();
+});
+
+// Testing area initialization
+function initializeTestingArea() {
+    const uploadArea = document.getElementById('testUploadArea');
+    const imageInput = document.getElementById('testImageInput');
+    
+    // Upload functionality
+    uploadArea.addEventListener('click', () => imageInput.click());
+    imageInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+            handleTestImageFile(e.target.files[0]);
+        }
+    });
+    
+    // Drawing functionality
+    testDrawingCanvas = document.getElementById('testDrawingCanvas');
+    testDrawingCtx = testDrawingCanvas.getContext('2d');
+    
+    testDrawingCtx.fillStyle = 'white';
+    testDrawingCtx.fillRect(0, 0, testDrawingCanvas.width, testDrawingCanvas.height);
+    testDrawingCtx.strokeStyle = 'black';
+    testDrawingCtx.lineWidth = 8;
+    testDrawingCtx.lineCap = 'round';
+    
+    document.getElementById('testDrawBtn').addEventListener('click', () => {
+        document.getElementById('testDrawingArea').style.display = 'block';
+    });
+    
+    document.getElementById('testClearCanvas').addEventListener('click', () => {
+        testDrawingCtx.fillStyle = 'white';
+        testDrawingCtx.fillRect(0, 0, testDrawingCanvas.width, testDrawingCanvas.height);
+    });
+    
+    // Drawing events
+    testDrawingCanvas.addEventListener('mousedown', startTestDrawing);
+    testDrawingCanvas.addEventListener('mousemove', testDraw);
+    testDrawingCanvas.addEventListener('mouseup', stopTestDrawing);
+    
+    // Random sample
+    document.getElementById('testSampleBtn').addEventListener('click', loadRandomSample);
+    
+    // Prediction
+    document.getElementById('testPredictBtn').addEventListener('click', makePrediction);
+}
+
+function handleTestImageFile(file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        document.getElementById('testPreviewImg').src = e.target.result;
+        document.getElementById('testImagePreview').style.display = 'block';
+        testCurrentImage = e.target.result;
+        document.getElementById('testPredictBtn').disabled = false;
+        document.getElementById('testActualLabel').textContent = 'Unknown';
+    };
+    reader.readAsDataURL(file);
+}
+
+function startTestDrawing(e) {
+    testIsDrawing = true;
+    const rect = testDrawingCanvas.getBoundingClientRect();
+    testDrawingCtx.beginPath();
+    testDrawingCtx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+}
+
+function testDraw(e) {
+    if (!testIsDrawing) return;
+    const rect = testDrawingCanvas.getBoundingClientRect();
+    testDrawingCtx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+    testDrawingCtx.stroke();
+}
+
+function stopTestDrawing() {
+    if (testIsDrawing) {
+        testIsDrawing = false;
+        testCurrentImage = testDrawingCanvas.toDataURL();
+        document.getElementById('testPreviewImg').src = testCurrentImage;
+        document.getElementById('testImagePreview').style.display = 'block';
+        document.getElementById('testPredictBtn').disabled = false;
+        document.getElementById('testActualLabel').textContent = 'Drawn';
+    }
+}
+
+function loadRandomSample() {
+    const randomIndex = Math.floor(Math.random() * 10000);
+    
+    fetch(`/api/sample/${randomIndex}`)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('testPreviewImg').src = data.image;
+            document.getElementById('testImagePreview').style.display = 'block';
+            document.getElementById('testActualLabel').textContent = data.class_name;
+            testCurrentImage = data.image;
+            document.getElementById('testPredictBtn').disabled = false;
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+function makePrediction() {
+    if (!testCurrentImage) return;
+    
+    fetch(`/api/predict/${currentModel}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image_data: testCurrentImage })
+    })
+    .then(response => response.json())
+    .then(data => {
+        displayTestPrediction(data);
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function displayTestPrediction(result) {
+    document.getElementById('predictedClass').textContent = result.predicted_label;
+    document.getElementById('confidence').textContent = `${(result.confidence * 100).toFixed(1)}%`;
+    document.getElementById('confidenceBar').style.width = `${result.confidence * 100}%`;
+    
+    // Show probability bars
+    const probBars = document.getElementById('probabilityBars');
+    probBars.innerHTML = '';
+    
+    result.probabilities.forEach((prob, index) => {
+        const div = document.createElement('div');
+        div.className = 'mb-2';
+        div.innerHTML = `
+            <div class="d-flex justify-content-between">
+                <small>${classNames[index]}</small>
+                <small>${(prob * 100).toFixed(1)}%</small>
+            </div>
+            <div class="progress" style="height: 6px;">
+                <div class="progress-bar" style="width: ${prob * 100}%"></div>
+            </div>
+        `;
+        probBars.appendChild(div);
+    });
+    
+    document.getElementById('testPrediction').style.display = 'block';
+}
+
+// Comparison charts
+function initializeComparisons() {
+    // Performance comparison chart
+    const ctx1 = document.getElementById('comparisonChart').getContext('2d');
+    
+    const modelNames = Object.keys(allModels);
+    const accuracies = modelNames.map(name => allModels[name].accuracy * 100);
+    const colors = modelNames.map(name => 
+        name === currentModel ? '#dc3545' : 'rgba(54, 162, 235, 0.8)'
+    );
+    
+    new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: modelNames.map(name => allModels[name].description.replace(/Q\d\.\d\s/, '').substring(0, 12)),
+            datasets: [{
+                label: 'Test Accuracy (%)',
+                data: accuracies,
+                backgroundColor: colors,
+                borderColor: colors.map(c => c.replace('0.8', '1')),
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true, max: 100 }
+            },
+            plugins: { legend: { display: false } }
+        }
+    });
+    
+    // Efficiency chart
+    const ctx2 = document.getElementById('efficiencyChart').getContext('2d');
+    const efficiencies = modelNames.map(name => 
+        (allModels[name].accuracy * 100) / (allModels[name].parameters / 1000000)
+    );
+    
+    new Chart(ctx2, {
+        type: 'scatter',
+        data: {
+            datasets: [{
+                label: 'Models',
+                data: modelNames.map((name, i) => ({
+                    x: allModels[name].parameters / 1000000,
+                    y: allModels[name].accuracy * 100
+                })),
+                backgroundColor: colors,
+                borderColor: colors.map(c => c.replace('0.8', '1')),
+                pointRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: { title: { display: true, text: 'Parameters (Millions)' } },
+                y: { title: { display: true, text: 'Accuracy (%)' } }
+            },
+            plugins: { legend: { display: false } }
+        }
+    });
+    
+    // Populate comparison table
+    const tbody = document.getElementById('comparisonTable');
+    modelNames.forEach(name => {
+        const info = allModels[name];
+        const efficiency = ((info.accuracy * 100) / (info.parameters / 1000000)).toFixed(1);
+        const isCurrentModel = name === currentModel;
+        
+        const row = tbody.insertRow();
+        row.className = isCurrentModel ? 'table-warning' : '';
+        row.innerHTML = `
+            <td>${isCurrentModel ? '<strong>' : ''}${info.description.replace(/Q\d\.\d\s/, '')}${isCurrentModel ? '</strong>' : ''}</td>
+            <td>${info.architecture_type}</td>
+            <td>${(info.parameters / 1000000).toFixed(2)}M</td>
+            <td>${(info.accuracy * 100).toFixed(2)}%</td>
+            <td>${info.activation}</td>
+            <td>${efficiency}</td>
+        `;
+    });
+}
+
+function initializeInsights() {
+    const insights = document.getElementById('modelInsights');
+    
+    // Generate insights based on model type and performance
+    let insightText = '';
+    
+    if (currentModel.includes('q15')) {
+        insightText = `
+            <h6><i class="fas fa-chart-line me-2"></i>Architecture Analysis (Q1.5)</h6>
+            <p>This model is part of the architecture comparison experiment, testing different MLP configurations:</p>
+            <ul>
+                <li><strong>Network Depth/Width:</strong> ${modelInfo.description.includes('Wider') ? 'Wider network with 1024 units per layer' : modelInfo.description.includes('Deeper') ? 'Deeper network with 4 hidden layers' : 'Base network with 2 hidden layers of 512 units'}</li>
+                <li><strong>Parameter Efficiency:</strong> ${((modelInfo.accuracy * 100) / (modelInfo.parameters / 1000000)).toFixed(1)} accuracy points per million parameters</li>
+                <li><strong>Key Finding:</strong> ${modelInfo.description.includes('Deeper') ? 'Deeper networks can achieve better accuracy but with diminishing returns' : modelInfo.description.includes('Wider') ? 'Wider networks show marginal improvement over base architecture' : 'Provides baseline performance for comparison'}</li>
+            </ul>
+        `;
+    } else if (currentModel.includes('q17')) {
+        insightText = `
+            <h6><i class="fas fa-project-diagram me-2"></i>CNN vs MLP Analysis (Q1.7)</h6>
+            <p>This model demonstrates the effectiveness of ${modelInfo.architecture_type} architectures:</p>
+            <ul>
+                <li><strong>Architecture Type:</strong> ${modelInfo.architecture_type} - ${modelInfo.architecture_type === 'CNN' ? 'Exploits spatial relationships in image data' : 'Traditional fully-connected approach'}</li>
+                <li><strong>Parameter Efficiency:</strong> ${((modelInfo.accuracy * 100) / (modelInfo.parameters / 1000000)).toFixed(1)} accuracy points per million parameters</li>
+                <li><strong>Key Finding:</strong> ${modelInfo.architecture_type === 'CNN' ? 'CNNs achieve superior performance with fewer parameters due to parameter sharing and translation invariance' : 'MLPs require more parameters to achieve comparable performance to CNNs'}</li>
+            </ul>
+        `;
+    } else if (currentModel.includes('q2')) {
+        insightText = `
+            <h6><i class="fas fa-function me-2"></i>Activation Function Analysis (Q2)</h6>
+            <p>This model explores the impact of different activation functions and initialization methods:</p>
+            <ul>
+                <li><strong>Activation Function:</strong> ${modelInfo.activation} - ${modelInfo.activation === 'ReLU' ? 'Non-saturating, prevents vanishing gradients' : modelInfo.activation === 'Tanh' ? 'Zero-centered but prone to saturation' : 'Classic activation but suffers from vanishing gradients'}</li>
+                <li><strong>Initialization:</strong> ${modelInfo.initialization} - ${modelInfo.initialization === 'Xavier' ? 'Proper weight scaling prevents gradient vanishing' : 'Default PyTorch initialization'}</li>
+                <li><strong>Key Finding:</strong> ${modelInfo.activation === 'ReLU' ? 'ReLU consistently achieves the best performance' : modelInfo.initialization === 'Xavier' && modelInfo.activation === 'Sigmoid' ? 'Xavier initialization significantly improves Sigmoid performance' : 'Demonstrates importance of proper initialization for saturating activations'}</li>
+            </ul>
+        `;
+    }
+    
+    insights.innerHTML = insightText;
+    
+    // Calculate rankings
+    const models = Object.entries(allModels);
+    
+    // Accuracy ranking
+    const accuracyRanking = models.sort((a, b) => b[1].accuracy - a[1].accuracy);
+    const accuracyRank = accuracyRanking.findIndex(([name]) => name === currentModel) + 1;
+    document.getElementById('accuracyRank').textContent = `${accuracyRank} of ${models.length}`;
+    
+    // Efficiency ranking
+    const efficiencyRanking = models.sort((a, b) => {
+        const effA = (a[1].accuracy * 100) / (a[1].parameters / 1000000);
+        const effB = (b[1].accuracy * 100) / (b[1].parameters / 1000000);
+        return effB - effA;
+    });
+    const efficiencyRank = efficiencyRanking.findIndex(([name]) => name === currentModel) + 1;
+    document.getElementById('efficiencyRank').textContent = `${efficiencyRank} of ${models.length}`;
+    
+    // Parameter ranking (smaller is better)
+    const parameterRanking = models.sort((a, b) => a[1].parameters - b[1].parameters);
+    const parameterRank = parameterRanking.findIndex(([name]) => name === currentModel) + 1;
+    document.getElementById('parameterRank').textContent = `${parameterRank} of ${models.length}`;
+    
+    // Overall score (weighted combination)
+    const overallScore = ((11 - accuracyRank) * 0.5 + (11 - efficiencyRank) * 0.3 + parameterRank * 0.2).toFixed(1);
+    document.getElementById('overallScore').textContent = `${overallScore}/10`;
+}
+
+function initializeDetailedVisualization() {
+    // This will be implemented in the three-visualization.js file
+    console.log('Detailed visualization initialized for model:', currentModel);
+}
+</script>
+<script src="{{ url_for('serve_static', filename='js/three-visualization.js') }}"></script>
+{% endblock %}
