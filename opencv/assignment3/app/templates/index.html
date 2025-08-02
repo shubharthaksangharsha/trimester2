@@ -471,17 +471,17 @@ function initializeModelDrawerButtons() {
     
     // Test: Add a debug button to check model data
     const debugBtn = document.createElement('button');
-    debugBtn.textContent = 'Debug Models';
-    debugBtn.className = 'btn btn-warning btn-sm position-fixed';
-    debugBtn.style.cssText = 'top: 150px; right: 20px; z-index: 1050;';
-    debugBtn.onclick = () => {
-        console.log('=== DEBUG MODEL DATA ===');
-        console.log('window.modelData:', window.modelData);
-        console.log('modelData keys:', Object.keys(window.modelData || {}));
-        console.log('Sample model:', Object.values(window.modelData || {})[0]);
-        alert(`Found ${Object.keys(window.modelData || {}).length} models`);
-    };
-    document.body.appendChild(debugBtn);
+    // debugBtn.textContent = 'Debug Models';
+    // debugBtn.className = 'btn btn-warning btn-sm position-fixed';
+    // debugBtn.style.cssText = 'top: 150px; right: 20px; z-index: 1050;';
+    // debugBtn.onclick = () => {
+        // console.log('=== DEBUG MODEL DATA ===');
+        // console.log('window.modelData:', window.modelData);
+        // console.log('modelData keys:', Object.keys(window.modelData || {}));
+        // console.log('Sample model:', Object.values(window.modelData || {})[0]);
+        // alert(`Found ${Object.keys(window.modelData || {}).length} models`);
+    // };
+    // document.body.appendChild(debugBtn);
 }
 
 // Initialize progress bars

@@ -50,10 +50,12 @@ Implementation of fundamental computer vision techniques including feature match
 |------------|----------|-----------|------------|-----------|
 | Assignment 1 | - | [Assignment_1_Notebook.ipynb](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/assignment1/Assignment_1_Notebook.ipynb) | - | - |
 | Assignment 2 | [Book Covers](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/assignment2/A2_smvs/book_covers), [Landmarks](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/assignment2/A2_smvs/landmarks), [Museum Paintings](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/assignment2/A2_smvs/museum_paintings) | [Assignment_2_Notebook.ipynb](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/assignment2/Assignment_2_Notebook.ipynb) | [Assingment_2_Report.pdf](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/assignment2/Assignment_2_Report.pdf) | [a2-cv.devshubh.me](https://a2-cv.devshubh.me) |
+| Assignment 3 | [Fashion-MNIST](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/assignment3/data/FashionMNIST) | [Assignment_3_Notebook.ipynb](https://github.com/shubharthaksangharsha/trimester2/blob/main/opencv/assignment3/Assignment_3_Notebook.ipynb) | - | [a3-cv.devshubh.me](https://a3-cv.devshubh.me) |
 
 **Project Details:**
 - Assignment 1: Research, implement, and experiment with image filtering operations (convolution, greyscale, binary, Gaussian, Sobel, LoG) using Python, numpy, skimage, and matplotlib. Builds foundational skills for later computer vision topics like CNNs.
 - [Assignment 2](opencv/assignment2/README.md): Computer Vision Explorer — An interactive application demonstrating feature matching, homography estimation, image retrieval, and epipolar geometry.
+- [Assignment 3](opencv/assignment3/README.md): Neural Network Explorer — Deep learning for perception tasks using Fashion-MNIST classification. Features comprehensive analysis of neural network architectures (MLP vs CNN), activation functions (ReLU, Tanh, Sigmoid), initialization methods, and interactive 3D visualizations with real-time model predictions.
 </details>
 
 ## Author
