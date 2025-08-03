@@ -16,7 +16,6 @@ This repository contains **Computer Vision Assignment 3** focusing on deep learn
 ```
 assignment3/
 ├── 📊 Assignment_3_Notebook.ipynb          # Main assignment notebook
-├── 📊 Assignment_3_Notebook Q1.ipynb       # Q1-specific notebook
 ├── 📁 data/                                # Fashion-MNIST dataset
 │   └── FashionMNIST/                       # Downloaded dataset files
 ├── 📁 models/                              # Trained model files
