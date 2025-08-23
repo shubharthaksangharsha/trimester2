@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌸 AI Flower Classification System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- 3D Background Container -->
+    <div id="three-container"></div>
+    
+    <!-- Main Application -->
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="title">
+                    <span class="title-icon">🌸</span>
+                    AI Flower Classification
+                    <span class="title-badge">94.14% Accuracy</span>
+                </h1>
+                <p class="subtitle">Advanced Computer Vision System • EfficientNet-B0 + CBAM Attention</p>
+            </div>
+        </header>
+
+        <!-- Model Selection -->
+        <section class="model-selection">
+            <h2><i class="fas fa-brain"></i> Select AI Model</h2>
+            <div class="model-grid">
+                {% for key, model in models.items() %}
+                <div class="model-card" data-model="{{ key }}" style="--accent-color: {{ model.color }}">
+                    <div class="model-icon">{{ model.icon }}</div>
+                    <h3>{{ model.name }}</h3>
+                    <p class="model-desc">{{ model.description }}</p>
+                    <div class="model-stats">
+                        <div class="stat">
+                            <span class="stat-label">Accuracy</span>
+                            <span class="stat-value">{{ "%.2f"|format(model.accuracy) }}%</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Efficiency</span>
+                            <span class="stat-value">{{ "%.0f"|format(model.efficiency) }}</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Size</span>
+                            <span class="stat-value">{{ model.parameters }}</span>
+                        </div>
+                    </div>
+                    <div class="model-check">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Input Methods -->
+        <section class="input-section">
+            <div class="input-tabs">
+                <button class="tab-btn active" data-tab="upload">
+                    <i class="fas fa-upload"></i> Upload Image
+                </button>
+                <button class="tab-btn" data-tab="browse">
+                    <i class="fas fa-images"></i> Browse Dataset
+                </button>
+                <button class="tab-btn" data-tab="draw">
+                    <i class="fas fa-paint-brush"></i> Draw Flower
+                </button>
+            </div>
+
+            <!-- Upload Tab -->
+            <div class="tab-content active" id="upload-tab">
+                <div class="upload-area" id="upload-area">
+                    <div class="upload-content">
+                        <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                        <h3>Drop your flower image here</h3>
+                        <p>or click to browse files</p>
+                        <input type="file" id="file-input" accept="image/*" hidden>
+                    </div>
+                    <div class="upload-preview" id="upload-preview" style="display: none;">
+                        <img id="preview-image" alt="Preview">
+                        <button id="remove-image" class="btn btn-danger">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Browse Dataset Tab -->
+            <div class="tab-content" id="browse-tab">
+                <div class="browse-container">
+                    <div class="browse-header">
+                        <h3><i class="fas fa-database"></i> Select from Training Dataset</h3>
+                        <p>Choose a flower image from our training dataset to test the model</p>
+                        <div class="browse-controls">
+                            <button id="refresh-flowers" class="btn btn-secondary">
+                                <i class="fas fa-sync-alt"></i> Refresh Images
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="flower-categories" id="flower-categories">
+                        <!-- Flower categories will be loaded here -->
+                        <div class="loading-flowers">
+                            <div class="spinner-small"></div>
+                            <p>Loading flower images...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="selected-flower-preview" id="selected-flower-preview" style="display: none;">
+                        <div class="selected-image-container">
+                            <img id="selected-flower-image" alt="Selected flower">
+                            <div class="image-info">
+                                <h4 id="selected-flower-name">Flower Name</h4>
+                                <p id="selected-flower-class">Class: <span></span></p>
+                                <p id="selected-flower-file">File: <span></span></p>
+                                <button id="clear-selection" class="btn btn-secondary">
+                                    <i class="fas fa-times"></i> Clear Selection
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drawing Canvas Tab -->
+            <div class="tab-content" id="draw-tab">
+                <div class="canvas-container">
+                    <canvas id="drawing-canvas" width="512" height="512"></canvas>
+                    <div class="canvas-controls">
+                        <button id="clear-canvas" class="btn btn-secondary">
+                            <i class="fas fa-eraser"></i> Clear
+                        </button>
+                        <div class="brush-controls">
+                            <label>Brush Size:</label>
+                            <input type="range" id="brush-size" min="5" max="50" value="20">
+                            <span id="brush-size-value">20px</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Predict Button -->
+        <section class="predict-section">
+            <div class="predict-options">
+                <label class="compare-toggle">
+                    <input type="checkbox" id="compare-all-models">
+                    <span class="checkmark"></span>
+                    <span class="toggle-text">
+                        <i class="fas fa-balance-scale"></i>
+                        Compare All Models
+                    </span>
+                </label>
+            </div>
+            <button id="predict-btn" class="btn btn-primary btn-large">
+                <i class="fas fa-magic"></i>
+                <span>Classify Flower</span>
+                <div class="btn-shine"></div>
+            </button>
+        </section>
+
+        <!-- Results -->
+        <section class="results-section" id="results-section" style="display: none;">
+            <h2><i class="fas fa-chart-line"></i> Prediction Results</h2>
+            
+            <div class="prediction-card">
+                <div class="prediction-main">
+                    <div class="predicted-flower">
+                        <span class="flower-emoji" id="flower-emoji">🌸</span>
+                        <h3 id="predicted-class">Flower Name</h3>
+                        <div class="confidence-circle">
+                            <svg class="confidence-ring" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="45" class="confidence-bg"></circle>
+                                <circle cx="50" cy="50" r="45" class="confidence-fill" id="confidence-circle"></circle>
+                            </svg>
+                            <div class="confidence-text">
+                                <span id="confidence-value">0%</span>
+                                <small>Confidence</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="prediction-details">
+                    <h4>All Predictions</h4>
+                    <div class="predictions-list" id="predictions-list">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                    
+                    <div class="model-info">
+                        <p><strong>Model Used:</strong> <span id="model-used">-</span></p>
+                        <p><strong>Model Accuracy:</strong> <span id="model-accuracy">-</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Model Comparison Results -->
+        <section class="comparison-results" id="comparison-results" style="display: none;">
+            <h2><i class="fas fa-balance-scale"></i> Model Comparison Results</h2>
+            
+            <div class="consensus-summary" id="consensus-summary">
+                <!-- Consensus information will be populated here -->
+            </div>
+            
+            <div class="model-comparison-grid" id="model-comparison-grid">
+                <!-- Model comparison cards will be populated here -->
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <h3>Flower Classification App</h3>
+                    <p>Advanced Computer Vision with Deep Learning</p>
+                </div>
+                <div class="footer-right">
+                    <h4>Created by Shubharthak Sangharsha</h4>
+                    <div class="social-links">
+                        <a href="https://devshubh.me" target="_blank" rel="noopener noreferrer">
+                            <i class="fas fa-globe"></i>
+                            Portfolio
+                        </a>
+                        <a href="https://www.linkedin.com/in/shubharthaksangharsha" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-linkedin"></i>
+                            LinkedIn
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Shubharthak Sangharsha | Computer Vision Assignment 4</p>
+            </div>
+        </footer>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loading-overlay">
+            <div class="loading-content">
+                <div class="spinner"></div>
+                <h3>Analyzing Flower...</h3>
+                <p>AI is processing your image</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/canvas.js') }}"></script>
+</body>
+</html>
