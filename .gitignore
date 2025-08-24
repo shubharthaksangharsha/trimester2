@@ -41,6 +41,7 @@ Thumbs.db
 .directory
 desktop.ini
 
+!ml-tools/assignment3/submissions-ml/*.csv
 # Data and logs
 *.log
 *.csv
